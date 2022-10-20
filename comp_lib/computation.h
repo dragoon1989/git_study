@@ -7,4 +7,7 @@
 // output buffer y should be allocated beforehand
 void gemv(const float* A, const int M, const int N, const float* x, float* y);
 
+// naive implementation using AVX2
+void gemv_AVX2_v1(const float* A, const int M, const int N, const float* x, float* y);
+
 #endif

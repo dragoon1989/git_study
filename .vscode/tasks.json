@@ -11,6 +11,9 @@
                 "-fdiagnostics-color=always",
                 "-c",
                 "-O2",
+                "-march=native",    // this option targets the native machine compiling current source code
+                "-mavx",            // enable AVX
+                "-mavx2",           // enable AVX2
                 "${workspaceFolder}\\comp_lib\\computation.cpp",
                 "-o",
                 "${workspaceFolder}\\comp_lib\\computation.o"
@@ -113,21 +116,6 @@
                 "archive libutility.a"
             ],
             "dependsOrder": "parallel"
-        },
-        {
-            "type": "shell",
-            "label": "clean",
-            "command": "rm",
-            "args": [
-                "${workspaceFolder}/comp_lib/*.o",
-                "${workspaceFolder}/comp_lib/*.a",
-                "${workspaceFolder}/util_lib/*.o",
-                "${workspaceFolder}/util_lib/*.a",
-                "${workspaceFolder}/*.o",
-                "${workspaceFolder}/*.exe",
-            ],
-            "detail": "clean the project",
-            "group": "none"
         }
     ],
     "version": "2.0.0"

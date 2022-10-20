@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         pfx[row] = static_cast<float>(row);
     }
 
-    gemv(pfA, M, N, pfx, pfy);
+    gemv_AVX2_v1(pfA, M, N, pfx, pfy);
 
     // output to disk
     std::ofstream outs("D:/workspace/files/output.dat", std::ios::binary);
