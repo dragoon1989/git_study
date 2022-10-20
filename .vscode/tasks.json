@@ -1,0 +1,134 @@
+{
+    "options": {
+        "cwd": "${fileDirname}"
+    },
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "compile libcomputation",
+            "command": "D:\\tools\\MSYS2\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-c",
+                "-O2",
+                "${workspaceFolder}\\comp_lib\\computation.cpp",
+                "-o",
+                "${workspaceFolder}\\comp_lib\\computation.o"
+                //"${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compile static lib in comp_lib"
+        },
+        {
+            "type": "cppbuild",
+            "label": "archive libcomputation.a",
+            "command": "D:\\tools\\MSYS2\\mingw64\\bin\\ar.exe",
+            "args": [
+                "rcs",
+                "${workspaceFolder}\\comp_lib\\libcomputation.a",
+                "${workspaceFolder}\\comp_lib\\*.o"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "archive static lib in comp_lib",
+            "dependsOn": [
+                "compile libcomputation"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "type": "cppbuild",
+            "label": "compile libutility",
+            "command": "D:\\tools\\MSYS2\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-c",
+                "-O2",
+                "${workspaceFolder}\\util_lib\\utility.cpp",
+                "-o",
+                "${workspaceFolder}\\util_lib\\utility.o"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compile static lib in util_lib"
+        },
+        {
+            "type": "cppbuild",
+            "label": "archive libutility.a",
+            "command": "D:\\tools\\MSYS2\\mingw64\\bin\\ar.exe",
+            "args": [
+                "-rcs",
+                "${workspaceFolder}\\util_lib\\libutility.a",
+                "${workspaceFolder}\\util_lib\\*.o"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "archive static lib in util_lib",
+            "dependsOn": [
+                "compile libutility"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "type": "cppbuild",
+            "label": "build run.exe",
+            "command": "D:\\tools\\MSYS2\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-I",
+                "${workspaceFolder}\\comp_lib\\",
+                "-I",
+                "${workspaceFolder}\\util_lib\\",
+                "-static",
+                "-O2",
+                "${workspaceFolder}\\run.cpp",
+                "-L",
+                "${workspaceFolder}\\comp_lib\\.",
+                "-lcomputation",
+                "-L",
+                "${workspaceFolder}\\util_lib\\.",
+                "-lutility",
+                "-o",
+                "${workspaceFolder}\\run.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "generate run.exe",
+            "dependsOn": [
+                "archive libcomputation.a",
+                "archive libutility.a"
+            ],
+            "dependsOrder": "parallel"
+        },
+        {
+            "type": "shell",
+            "label": "clean",
+            "command": "rm",
+            "args": [
+                "${workspaceFolder}/comp_lib/*.o",
+                "${workspaceFolder}/comp_lib/*.a",
+                "${workspaceFolder}/util_lib/*.o",
+                "${workspaceFolder}/util_lib/*.a",
+                "${workspaceFolder}/*.o",
+                "${workspaceFolder}/*.exe",
+            ],
+            "detail": "clean the project",
+            "group": "none"
+        }
+    ],
+    "version": "2.0.0"
+}
